@@ -74,9 +74,17 @@
       display:flex; flex-direction:column;
       align-items:center; gap:10px;
       margin-bottom:28px;
+      /* espaço para não colidir com o badge */
+      padding-top:10px;
+      width:100%;
+      max-width:min(88vw, 500px);
     }
     .titulo-linha {
       display:flex; align-items:center; gap:12px;
+      /* evita overflow em landscape */
+      padding-right:clamp(0px, 18vw, 160px);
+      width:100%;
+      justify-content:center;
     }
     .titulo-linha img {
       width:clamp(36px,8vw,52px);
@@ -90,10 +98,13 @@
       50%      { transform:translateY(-6px); }
     }
     .titulo-texto {
-      font-size:clamp(14px,4vw,26px);
+      font-size:clamp(11px,3vw,22px);
       color: var(--ouro);
       text-shadow: 3px 3px 0 #000, 0 0 20px rgba(245,200,66,0.3);
       letter-spacing:1px;
+      /* quebra linha se necessário */
+      word-break:break-word;
+      text-align:center;
     }
     .subtitulo {
       font-size:clamp(7px,1.8vw,9px);
@@ -169,6 +180,8 @@
       color:rgba(255,255,255,0.3);
       text-align:center;
       line-height:2;
+      /* garante que não sobreponha o build info */
+      padding-bottom:32px;
     }
 
     /* Build info */
@@ -178,6 +191,8 @@
       font-size:7px;
       color:rgba(255,255,255,0.2);
       z-index:60;
+      /* garante que fique abaixo do copyright */
+      background: transparent;
     }
 
     /* ========== MODAL CONFIGURAÇÕES ========== */
