@@ -1,0 +1,446 @@
+/* =============================================
+   Um Pato e um Sonho - style.css
+   v0.0.4 - O Mundo Desperta
+   ============================================= */
+
+:root {
+  --ouro:        #f5c842;
+  --ouro-escuro: #a07c10;
+  --ouro-borda:  #d4a017;
+  --fundo:       #0d1f0d;
+  --btn-fundo:   #151f15;
+  --azul-badge:  #2563eb;
+  --cinza:       #4a4a4a;
+  --cinza-texto: #888;
+  --inv-fundo:   #1a1a2e;
+  --inv-slot:    #16213e;
+  --inv-borda:   #0f3460;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html, body {
+  width:100%; height:100%;
+  background: var(--fundo);
+  overflow:hidden;
+  font-family: 'Press Start 2P', monospace;
+  color:#fff;
+  touch-action:none;
+}
+
+/* ========== MENU PRINCIPAL ========== */
+#tela-menu {
+  position:fixed; inset:0;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  background: radial-gradient(ellipse at center, #1a3a1a 0%, #0d1f0d 70%);
+  z-index:50;
+  padding:20px;
+  opacity:1;
+  transition: opacity 0.4s ease;
+}
+#tela-menu.fadeout { opacity:0; pointer-events:none; }
+
+#badge-versao {
+  position:fixed; top:16px; right:16px;
+  background: var(--azul-badge);
+  color:#fff; font-size:8px;
+  padding:8px 14px; border-radius:20px;
+  display:flex; align-items:center; gap:8px;
+  box-shadow:0 2px 12px rgba(37,99,235,0.5);
+  z-index:60; cursor:pointer;
+  transition:transform .15s;
+}
+#badge-versao:active { transform:scale(0.95); }
+#badge-versao .v-num {
+  background:rgba(255,255,255,0.2);
+  padding:3px 7px; border-radius:10px; font-size:7px;
+}
+
+.menu-header {
+  display:flex; flex-direction:column;
+  align-items:center; gap:10px;
+  margin-bottom:28px;
+  padding-top:10px;
+  width:100%; max-width:min(88vw,500px);
+}
+.titulo-linha {
+  display:flex; align-items:center; gap:12px;
+  padding-right:clamp(0px,18vw,160px);
+  width:100%; justify-content:center;
+}
+.titulo-linha img {
+  width:clamp(36px,8vw,52px); height:clamp(36px,8vw,52px);
+  image-rendering:pixelated; border-radius:8px;
+  animation:float 2.5s ease-in-out infinite;
+}
+.titulo-texto {
+  font-size:clamp(11px,3vw,22px);
+  color:var(--ouro);
+  text-shadow:3px 3px 0 #000, 0 0 20px rgba(245,200,66,0.3);
+  letter-spacing:1px; text-align:center;
+}
+.subtitulo {
+  font-size:clamp(7px,1.8vw,9px);
+  color:rgba(255,255,255,0.45);
+  letter-spacing:3px; text-transform:uppercase;
+  text-shadow:1px 1px 0 #000;
+}
+
+.menu-botoes {
+  display:flex; flex-direction:column;
+  align-items:center; gap:12px;
+  width:100%; max-width:420px;
+}
+.btn-menu {
+  width:100%; padding:16px 24px;
+  background:var(--btn-fundo); color:#fff;
+  font-family:inherit; font-size:clamp(9px,2.5vw,11px);
+  letter-spacing:2px;
+  border:2px solid var(--ouro-borda); border-radius:14px;
+  cursor:pointer;
+  box-shadow:0 4px 0 var(--ouro-escuro), 0 0 12px rgba(245,200,66,0.15);
+  transition:transform .1s, box-shadow .1s;
+  -webkit-tap-highlight-color:transparent;
+}
+.btn-menu:active {
+  transform:translateY(3px);
+  box-shadow:0 1px 0 var(--ouro-escuro);
+}
+.btn-menu.principal { animation:glow-pulse 2.5s ease-in-out infinite; }
+.btn-menu.desativado {
+  border-color:var(--cinza); color:var(--cinza-texto);
+  box-shadow:none; cursor:default; pointer-events:none; animation:none;
+}
+
+.copyright {
+  margin-top:18px; padding-bottom:32px;
+  font-size:clamp(6px,1.5vw,7px);
+  color:rgba(255,255,255,0.3); text-align:center; line-height:2;
+}
+#build-info {
+  position:fixed; bottom:10px; left:14px;
+  font-size:7px; color:rgba(255,255,255,0.2); z-index:60;
+}
+
+/* ========== MODAL CONFIGURAÇÕES ========== */
+#overlay-modal {
+  position:fixed; inset:0;
+  background:rgba(0,0,0,0.75);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  z-index:80; display:none;
+  align-items:center; justify-content:center;
+}
+#overlay-modal.aberto { display:flex; animation:fadeIn .2s ease; }
+
+.modal-box {
+  background:#0f1f0f;
+  border:2px solid var(--ouro-borda); border-radius:18px;
+  padding:24px 20px;
+  width:min(92vw,400px);
+  display:flex; flex-direction:column;
+  align-items:center; gap:14px;
+  box-shadow:0 0 40px rgba(0,0,0,0.9);
+  max-height:85vh; overflow-y:auto;
+}
+.modal-titulo {
+  font-size:11px; color:var(--ouro);
+  text-shadow:2px 2px 0 #000;
+  display:flex; align-items:center; gap:8px;
+}
+
+/* Sub-abas de configurações */
+.config-abas {
+  display:flex; gap:6px; flex-wrap:wrap; justify-content:center;
+  width:100%;
+}
+.config-aba {
+  padding:8px 10px; font-family:inherit; font-size:7px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.15); border-radius:8px;
+  color:rgba(255,255,255,0.5); cursor:pointer;
+  transition:all .15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.config-aba.ativa {
+  background:rgba(245,200,66,0.15);
+  border-color:var(--ouro-borda); color:var(--ouro);
+}
+
+.config-conteudo { width:100%; display:flex; flex-direction:column; gap:10px; }
+.config-linha {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:8px; padding:6px 0;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.config-label { font-size:7px; color:rgba(255,255,255,0.7); flex:1; }
+.config-valor { font-size:7px; color:var(--ouro); }
+.config-toggle {
+  padding:6px 12px; font-family:inherit; font-size:7px;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.2); border-radius:6px;
+  color:#fff; cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.config-toggle.ativo { background:rgba(245,200,66,0.2); border-color:var(--ouro); color:var(--ouro); }
+.config-select {
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.2); border-radius:6px;
+  color:#fff; font-family:inherit; font-size:7px; padding:6px;
+}
+
+.modal-btns { display:flex; flex-direction:column; width:100%; gap:8px; }
+.modal-info { font-size:7px; color:rgba(255,255,255,0.4); text-align:center; line-height:2; }
+
+/* ========== TELA DE JOGO ========== */
+#tela-jogo { position:fixed; inset:0; display:none; z-index:10; }
+#tela-jogo.ativo { display:block; }
+#game-canvas { position:absolute; inset:0; }
+#hud-canvas  { position:absolute; inset:0; pointer-events:none; z-index:15; }
+
+#hud-logo {
+  position:fixed; top:12px; left:12px;
+  display:flex; align-items:center; gap:8px;
+  pointer-events:none; z-index:20;
+}
+#hud-logo img {
+  width:38px; height:38px; border-radius:8px;
+  border:2px solid var(--ouro); image-rendering:pixelated;
+}
+#hud-logo span { font-size:7px; color:var(--ouro); text-shadow:2px 2px 0 #000; line-height:1.6; }
+
+/* Hotbar in-game */
+#hotbar-ingame {
+  position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+  display:flex; gap:4px; z-index:25;
+}
+.hotbar-slot-ingame {
+  width:48px; height:48px;
+  background:rgba(0,0,0,0.5);
+  border:2px solid rgba(255,255,255,0.2); border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.hotbar-slot-ingame.ativo { border-color:var(--ouro); background:rgba(245,200,66,0.15); }
+.hotbar-slot-ingame canvas { image-rendering:pixelated; }
+
+/* Botão abrir inventário */
+#btn-inventario {
+  position:fixed; top:12px; right:16px;
+  width:44px; height:44px;
+  background:rgba(0,0,0,0.6);
+  border:2px solid var(--ouro-borda); border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; cursor:pointer; z-index:25;
+  -webkit-tap-highlight-color:transparent;
+}
+
+#joystick-zone { position:fixed; bottom:30px; left:30px; z-index:30; }
+#joystick {
+  width:110px; height:110px; border-radius:50%;
+  background:rgba(255,255,255,0.1);
+  border:3px solid rgba(255,255,255,0.25);
+  display:flex; align-items:center; justify-content:center;
+  touch-action:none;
+}
+#joystick-knob {
+  width:44px; height:44px; border-radius:50%;
+  background:rgba(245,200,66,0.85);
+  border:2px solid rgba(255,255,255,0.4); pointer-events:none;
+}
+
+#controls-hint {
+  position:fixed; bottom:16px; right:16px;
+  font-size:7px; color:rgba(255,255,255,0.35);
+  text-shadow:1px 1px 0 #000; text-align:right;
+  line-height:2; pointer-events:none; z-index:20;
+}
+#version-ingame {
+  position:fixed; bottom:8px; left:50%; transform:translateX(-50%);
+  font-size:6px; color:rgba(255,255,255,0.18);
+  pointer-events:none; z-index:20;
+}
+
+/* ========== INVENTÁRIO ========== */
+#tela-inventario {
+  position:fixed; inset:0;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+  z-index:40; display:none;
+  flex-direction:column; align-items:center; justify-content:center;
+  padding:12px; gap:10px;
+}
+#tela-inventario.aberto { display:flex; animation:fadeIn .2s ease; }
+
+.inv-painel {
+  background:var(--inv-fundo);
+  border:2px solid var(--inv-borda); border-radius:14px;
+  padding:14px; width:100%; max-width:500px;
+}
+.inv-titulo {
+  font-size:9px; color:var(--ouro);
+  text-shadow:2px 2px 0 #000;
+  margin-bottom:12px; text-align:center;
+}
+
+/* Seção superior: armadura + pato + crafting */
+.inv-topo {
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:10px; align-items:center;
+  margin-bottom:12px;
+}
+.inv-armadura {
+  display:flex; flex-direction:column; gap:6px;
+}
+.armor-slot {
+  width:52px; height:52px;
+  background:var(--inv-slot);
+  border:2px solid var(--inv-borda); border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px; cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.armor-label { font-size:6px; color:rgba(255,255,255,0.4); text-align:center; margin-top:2px; }
+
+#inv-pato {
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(255,255,255,0.03); border-radius:10px;
+  padding:8px; min-height:90px;
+}
+
+.inv-craft-area { display:flex; flex-direction:column; align-items:center; gap:6px; }
+.craft-titulo { font-size:7px; color:rgba(255,255,255,0.4); }
+.craft-grid {
+  display:grid; grid-template-columns:repeat(2,44px);
+  gap:4px;
+}
+.craft-slot {
+  width:44px; height:44px;
+  background:var(--inv-slot);
+  border:1px solid var(--inv-borda); border-radius:6px;
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* Grade de inventário 9×3 */
+#inv-grid {
+  display:grid; grid-template-columns:repeat(9,1fr); gap:4px;
+  margin-bottom:8px;
+}
+
+/* Hotbar no inventário */
+#hotbar-ui {
+  display:grid; grid-template-columns:repeat(9,1fr); gap:4px;
+  border-top:2px solid var(--inv-borda); padding-top:8px;
+}
+
+.inv-slot {
+  aspect-ratio:1; min-width:0;
+  background:var(--inv-slot);
+  border:1px solid var(--inv-borda); border-radius:6px;
+  display:flex; align-items:center; justify-content:center;
+  position:relative; cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  transition:border-color .1s;
+}
+.inv-slot:active, .inv-slot.selecionado {
+  border-color:var(--ouro); background:rgba(245,200,66,0.1);
+}
+.inv-slot canvas { image-rendering:pixelated; width:100%; height:100%; }
+.slot-icone    { font-size:clamp(14px,3.5vw,22px); }
+.slot-placeholder { font-size:clamp(16px,4vw,24px); opacity:0.3; }
+.slot-qtd {
+  position:absolute; bottom:2px; right:3px;
+  font-size:6px; color:#fff;
+  text-shadow:1px 1px 0 #000;
+}
+
+/* ---- BANCADA (receitas) ---- */
+#tela-bancada {
+  position:fixed; inset:0;
+  background:rgba(0,0,0,0.88);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+  z-index:45; display:none;
+  flex-direction:column; align-items:center; justify-content:flex-start;
+  padding:14px; gap:10px; overflow-y:auto;
+}
+#tela-bancada.aberto { display:flex; animation:fadeIn .2s ease; }
+
+.bancada-header {
+  display:flex; align-items:center; gap:10px;
+  width:100%; max-width:480px;
+}
+.bancada-header img { width:48px; height:48px; image-rendering:pixelated; }
+.bancada-titulo { font-size:10px; color:var(--ouro); text-shadow:2px 2px 0 #000; }
+.bancada-subtitulo { font-size:7px; color:rgba(255,255,255,0.4); margin-top:4px; }
+
+.tier-filtros {
+  display:flex; gap:6px; flex-wrap:wrap;
+  justify-content:center; width:100%; max-width:480px;
+}
+.tier-btn {
+  padding:6px 10px; font-family:inherit; font-size:6px;
+  border-radius:8px; border:1px solid rgba(255,255,255,0.2);
+  background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.5);
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.tier-btn.ativo { border-color:var(--ouro); color:var(--ouro); background:rgba(245,200,66,0.1); }
+
+#receitas-lista { width:100%; max-width:480px; display:flex; flex-direction:column; gap:8px; }
+
+.receita-item {
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1); border-radius:10px;
+  padding:10px; display:flex; align-items:center; gap:10px;
+}
+.receita-item.pode-craftar { border-color:rgba(245,200,66,0.3); }
+.receita-icone { width:44px; height:44px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.receita-icone canvas { image-rendering:pixelated; }
+.receita-info { flex:1; }
+.receita-nome { font-size:8px; color:#fff; margin-bottom:4px; }
+.receita-ings { font-size:6px; display:flex; gap:6px; flex-wrap:wrap; }
+.ing-ok    { color:#81c784; }
+.ing-falta { color:#e57373; }
+.btn-craft {
+  padding:8px 10px; font-family:inherit; font-size:7px;
+  background:rgba(245,200,66,0.15);
+  border:1px solid var(--ouro-borda); border-radius:8px;
+  color:var(--ouro); cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.btn-craft.disabled { opacity:0.3; pointer-events:none; }
+.btn-craft:active { background:rgba(245,200,66,0.3); }
+
+/* ========== NOTIFICAÇÃO ========== */
+#notificacao {
+  position:fixed; top:70px; left:50%; transform:translateX(-50%);
+  background:rgba(0,0,0,0.85);
+  border:1px solid var(--ouro-borda); border-radius:10px;
+  padding:10px 18px; font-size:8px; color:var(--ouro);
+  z-index:100; opacity:0; transition:opacity .3s;
+  pointer-events:none; white-space:nowrap;
+}
+#notificacao.visivel { opacity:1; }
+
+/* ========== ANIMAÇÕES ========== */
+@keyframes float {
+  0%,100% { transform:translateY(0); }
+  50%      { transform:translateY(-6px); }
+}
+@keyframes invPatoFloat {
+  0%,100% { transform:translateY(0) scale(1); }
+  50%      { transform:translateY(-4px) scale(1.05); }
+}
+@keyframes glow-pulse {
+  0%,100% { box-shadow:0 4px 0 var(--ouro-escuro), 0 0 12px rgba(245,200,66,0.15); }
+  50%      { box-shadow:0 4px 0 var(--ouro-escuro), 0 0 28px rgba(245,200,66,0.45); }
+}
+@keyframes fadeIn {
+  from { opacity:0; transform:scale(0.97); }
+  to   { opacity:1; transform:scale(1); }
+}
